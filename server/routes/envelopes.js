@@ -3,7 +3,7 @@ var bodyParser = require('body-parser')
 // create application/json parser
 var jsonParser = bodyParser.json()
 
-const { getAllEnvelopes, getSpecificEnvelope, addEnvelope } = require('../db.js')
+const { getAllEnvelopes, getSpecificEnvelope, addEnvelope, deleteEnvelope } = require('../db.js')
 
 const envelopesRouter = express.Router();
 
@@ -37,11 +37,19 @@ envelopesRouter.post('/', jsonParser, (req, res) => {
     const newEnvelope = getSpecificEnvelope("hello8");
     console.log(newEnvelope)
 
-    res.status(201).json(newEnvelope);
+    res.status(201).json({ newEnvelope });
   } catch(error) {
     res.status(400).send(error.message);
   }
 });
+
+//DELETE an envelope
+envelopesRouter.delete('/:title', (req, res) => {
+  const title = req.params.title;
+  console.log(title);
+  deleteEnvelope(title);
+  res.status(204).send();
+})
 
 
 module.exports = envelopesRouter
