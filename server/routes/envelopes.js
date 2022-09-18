@@ -3,7 +3,12 @@ var bodyParser = require('body-parser')
 // create application/json parser
 var jsonParser = bodyParser.json()
 
-const { getAllEnvelopes, getSpecificEnvelope, addEnvelope, deleteEnvelope } = require('../db.js')
+const { 
+  getAllEnvelopes, 
+  getSpecificEnvelope, 
+  addEnvelope, 
+  deleteEnvelope, 
+  updateEnvelope } = require('../db.js');
 
 const envelopesRouter = express.Router();
 
@@ -45,10 +50,20 @@ envelopesRouter.post('/', jsonParser, (req, res) => {
 
 //DELETE an envelope
 envelopesRouter.delete('/:title', (req, res) => {
-  const title = req.params.title;
-  console.log(title);
-  deleteEnvelope(title);
+  deleteEnvelope(req.params.title);
   res.status(204).send();
+});
+
+//PUT Update an existing envelope
+envelopesRouter.put('/:title', jsonParser, (req, res) => {
+  try {
+    const envelopeUpdate = req.body;
+    const updatedEnvelope = updateEnvelope(req.params.title, updateEnvelope); 
+    res.send(200).send( {envelope: updateEnvelope} );
+
+  } catch(err) {
+    res.status(400).send();
+  }
 })
 
 
