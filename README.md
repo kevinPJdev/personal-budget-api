@@ -1,6 +1,6 @@
 # Personal Budget App
 
-A budgeting API built using Express.js and tested with Mocha, Chai, and SuperTest.
+A budgeting API built using Express.js and tested with Mocha.
 
 ## Installation
 
